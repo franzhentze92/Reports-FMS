@@ -35,6 +35,11 @@
                                         data-bs-target="#reports" type="button" role="tab" 
                                         aria-controls="reports" aria-selected="false">Reports</button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#settings" type="button" role="tab" 
+                                        aria-controls="settings" aria-selected="false">Settings</button>
+                            </li>
                         </ul>
 
                         <!-- Tab Content -->
@@ -80,7 +85,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Filter Reports</h5>
                                         <div class="row">
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="farmFilter" class="form-label">Farm</label>
                                                 <select class="form-select" id="farmFilter">
                                                     <option value="">All Farms</option>
@@ -90,7 +95,7 @@
                                                     <option value="Farm 4">Farm 4</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="paddockFilter" class="form-label">Paddock</label>
                                                 <select class="form-select" id="paddockFilter">
                                                     <option value="">All Paddocks</option>
@@ -99,7 +104,17 @@
                                                     <option value="Field C">Field C</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mb-3">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="responsableFilter" class="form-label">Responsable</label>
+                                                <select class="form-select" id="responsableFilter">
+                                                    <option value="">All</option>
+                                                    <option value="John Doe">John Doe</option>
+                                                    <option value="Jane Smith">Jane Smith</option>
+                                                    <option value="Carlos Ruiz">Carlos Ruiz</option>
+                                                    <option value="Amina Patel">Amina Patel</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
                                                 <label for="dateRangeFilter" class="form-label">Date Range</label>
                                                 <select class="form-select" id="dateRangeFilter">
                                                     <option value="7">Last 7 days</option>
@@ -135,7 +150,7 @@
                                 
                                 <!-- Distribution Charts -->
                                 <div class="row">
-                                    <div class="col-md-6 mb-4">
+                                    <div class="col-md-4 mb-4">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">Water Usage by Paddock</h5>
@@ -145,7 +160,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
+                                    <div class="col-md-4 mb-4">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">Water Usage by Farm</h5>
@@ -155,6 +170,37 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Water Usage by Responsable</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="responsableDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Settings Tab -->
+                            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <div class="mb-3">
+                                    <h4>Settings</h4>
+                                </div>
+                                <form id="settingsForm" class="mb-3" autocomplete="off">
+                                    <div class="mb-3 row">
+                                        <label for="cubicMetersPerHour" class="col-sm-4 col-form-label">Cubic meters per hour (m³/h)</label>
+                                        <div class="col-sm-4">
+                                            <input type="number" min="0" step="0.01" class="form-control" id="cubicMetersPerHour" name="cubicMetersPerHour" placeholder="Enter value" required>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div id="settingsSavedMsg" class="alert alert-success d-none" role="alert">
+                                    Settings saved!
                                 </div>
                             </div>
                         </div>

@@ -110,6 +110,7 @@ a:hover {
 .btn-outline-success:hover {
     background-color: #8bb33a;
     border-color: #8bb33a;
+    color: #fff;
 }
 
 /* Badge Styles */
@@ -142,4 +143,15 @@ a:hover {
     .nav-tabs .nav-link {
         padding: 8px 15px;
     }
+}
+
+.card.hover-shadow {
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+.card.hover-shadow:hover {
+    box-shadow: 0 4px 16px rgba(139, 179, 58, 0.15);
+    border: 2px solid #8bb33a;
+}
+.card.hover-shadow:hover .card-title {
+    color: #8bb33a !important;
 } 
