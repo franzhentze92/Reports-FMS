@@ -14,10 +14,10 @@ const activitiesData = [
     { date: '2024-12-21', farm: 'Farm 1', field: 'Field A', activity: 'Foliar Spray', responsable: 'Amina Patel', nutrient: 'Potassium', amount: 23, status: 'Completed' }
 ];
 
-function updateActivitiesTable() {
+function updateActivitiesTable(filters = {}) {
     const tbody = $("#activities .table tbody");
     tbody.empty();
-    activitiesData.forEach(act => {
+    getFilteredActivities(filters).forEach((act, idx) => {
         tbody.append(`
             <tr>
                 <td>${act.date}</td>
@@ -25,7 +25,8 @@ function updateActivitiesTable() {
                 <td>${act.field}</td>
                 <td>${act.activity}</td>
                 <td>${act.responsable}</td>
-                <td><span class="badge bg-success">${act.status}</span></td>
+                <td><span class=\"badge bg-success\">${act.status}</span></td>
+                <td><button class=\"btn btn-outline-success btn-sm\" data-activity-idx=\"${idx}\">View</button></td>
             </tr>
         `);
     });
@@ -282,4 +283,23 @@ $(document).ready(function() {
         updateAllCharts();
     });
     updateAllCharts();
+    // Activities tab filters
+    $('#applyActivitiesFilters').on('click', function() {
+        const filters = {
+            farm: $('#activitiesFarmFilter').val(),
+            paddock: $('#activitiesPaddockFilter').val(),
+            responsable: $('#activitiesResponsableFilter').val(),
+            dateRange: $('#activitiesDateRangeFilter').val(),
+            fertType: $('#activitiesTypeFilter').val()
+        };
+        updateActivitiesTable(filters);
+    });
+    $('#resetActivitiesFilters').on('click', function() {
+        $('#activitiesFarmFilter').val('');
+        $('#activitiesPaddockFilter').val('');
+        $('#activitiesResponsableFilter').val('');
+        $('#activitiesDateRangeFilter').val('7');
+        $('#activitiesTypeFilter').val('');
+        updateActivitiesTable();
+    });
 }); 

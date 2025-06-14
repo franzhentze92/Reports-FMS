@@ -50,16 +50,62 @@
                                 <div class="mb-3">
                                     <h4>Irrigation Activities</h4>
                                 </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="activitiesFarmFilter" class="form-label">Farm</label>
+                                        <select class="form-select" id="activitiesFarmFilter">
+                                            <option value="">All Farms</option>
+                                            <option value="Farm 1">Farm 1</option>
+                                            <option value="Farm 2">Farm 2</option>
+                                            <option value="Farm 3">Farm 3</option>
+                                            <option value="Farm 4">Farm 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesPaddockFilter" class="form-label">Paddock</label>
+                                        <select class="form-select" id="activitiesPaddockFilter">
+                                            <option value="">All Paddocks</option>
+                                            <option value="Field A">Field A</option>
+                                            <option value="Field B">Field B</option>
+                                            <option value="Field C">Field C</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesResponsableFilter" class="form-label">Responsable</label>
+                                        <select class="form-select" id="activitiesResponsableFilter">
+                                            <option value="">All</option>
+                                            <option value="John Doe">John Doe</option>
+                                            <option value="Jane Smith">Jane Smith</option>
+                                            <option value="Carlos Ruiz">Carlos Ruiz</option>
+                                            <option value="Amina Patel">Amina Patel</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesDateRangeFilter" class="form-label">Date Range</label>
+                                        <select class="form-select" id="activitiesDateRangeFilter">
+                                            <option value="7">Last 7 days</option>
+                                            <option value="30">Last 30 days</option>
+                                            <option value="90">Last 90 days</option>
+                                            <option value="180">Last 6 months</option>
+                                            <option value="365">Last year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <button class="btn btn-success me-2" id="applyActivitiesFilters">Apply Filters</button>
+                                        <button class="btn btn-outline-secondary" id="resetActivitiesFilters">Reset</button>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Farm</th>
-                                                <th>Field</th>
+                                                <th>Paddock</th>
                                                 <th>Duration (hours)</th>
                                                 <th>Water Volume (m³)</th>
                                                 <th>Status</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -187,6 +233,10 @@
                             <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                 <div class="mb-3">
                                     <h4>Settings</h4>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>How Water Usage Calculation Works:</strong><br>
+                                    The water usage for each irrigation activity is calculated using the value you set below (cubic meters per hour). All irrigation activity records and calculations in this section are based on data from the Activity module. Please ensure your activity records are up to date for accurate reporting.
                                 </div>
                                 <form id="settingsForm" class="mb-3" autocomplete="off">
                                     <div class="mb-3 row">

@@ -55,6 +55,24 @@ $(document).ready(function() {
         $('#settingsSavedMsg').addClass('d-none');
     });
 
+    // Activities tab filters
+    $('#applyActivitiesFilters').on('click', function() {
+        const filters = {
+            farm: $('#activitiesFarmFilter').val(),
+            paddock: $('#activitiesPaddockFilter').val(),
+            responsable: $('#activitiesResponsableFilter').val(),
+            dateRange: $('#activitiesDateRangeFilter').val()
+        };
+        updateActivitiesTable(filters);
+    });
+    $('#resetActivitiesFilters').on('click', function() {
+        $('#activitiesFarmFilter').val('');
+        $('#activitiesPaddockFilter').val('');
+        $('#activitiesResponsableFilter').val('');
+        $('#activitiesDateRangeFilter').val('7');
+        updateActivitiesTable();
+    });
+
     updateActivitiesTable();
 });
 
@@ -110,12 +128,12 @@ function getFilteredActivities(filters = {}) {
     });
 }
 
-// Update activities table
-function updateActivitiesTable() {
+// Update activities table (add filters param)
+function updateActivitiesTable(filters = {}) {
     const tbody = $("#activities .table tbody");
     tbody.empty();
     const cubicMetersPerHour = getCubicMetersPerHour();
-    activitiesData.forEach(act => {
+    getFilteredActivities(filters).forEach((act, idx) => {
         const waterVolume = (act.duration * cubicMetersPerHour).toFixed(2);
         tbody.append(`
             <tr>
@@ -124,7 +142,8 @@ function updateActivitiesTable() {
                 <td>${act.field}</td>
                 <td>${act.duration}</td>
                 <td>${waterVolume}</td>
-                <td><span class="badge bg-success">${act.status}</span></td>
+                <td><span class=\"badge bg-success\">${act.status}</span></td>
+                <td><button class=\"btn btn-outline-success btn-sm\" data-activity-idx=\"${idx}\">View</button></td>
             </tr>
         `);
     });
