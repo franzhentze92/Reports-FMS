@@ -138,14 +138,25 @@ function updateWaterUsageChart(filters = {}) {
         window.waterUsageChart.destroy();
     }
     const cubicMetersPerHour = getCubicMetersPerHour();
-    // Group by month
-    const monthly = Array(12).fill(0);
-    getFilteredActivities(filters).forEach(act => {
-        const month = new Date(act.date).getMonth();
-        monthly[month] += act.duration * cubicMetersPerHour;
+    // Group by year-month
+    const filtered = getFilteredActivities(filters);
+    const allMonths = Array.from(new Set(filtered.map(act => {
+        const d = new Date(act.date);
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    })));
+    allMonths.sort();
+    const monthLabels = allMonths.map(ym => {
+        const [year, month] = ym.split('-');
+        return `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(month)-1]} ${year}`;
+    });
+    const monthly = allMonths.map(ym => {
+        return filtered.filter(act => {
+            const d = new Date(act.date);
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` === ym;
+        }).reduce((sum, act) => sum + act.duration * cubicMetersPerHour, 0);
     });
     const data = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: monthLabels,
         datasets: [{
             label: 'Water Usage (m³)',
             data: monthly.map(v => +v.toFixed(2)),

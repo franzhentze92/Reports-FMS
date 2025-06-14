@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Nutrition Reports - FMS</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+    <!-- Custom CSS -->
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Main Content Area -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="card-title mb-0">Crop Nutrition Management</h2>
+                            <a href="../index.html" class="btn btn-outline-success">Back to Reports</a>
+                        </div>
+                        
+                        <!-- Tabs -->
+                        <ul class="nav nav-tabs" id="nutritionTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="activities-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#activities" type="button" role="tab" 
+                                        aria-controls="activities" aria-selected="true">Activities</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="reports-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#reports" type="button" role="tab" 
+                                        aria-controls="reports" aria-selected="false">Reports</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#settings" type="button" role="tab" 
+                                        aria-controls="settings" aria-selected="false">Settings</button>
+                            </li>
+                        </ul>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content mt-4" id="nutritionTabsContent">
+                            <!-- Activities Tab -->
+                            <div class="tab-pane fade show active" id="activities" role="tabpanel" 
+                                 aria-labelledby="activities-tab">
+                                <div class="mb-3">
+                                    <h4>Crop Nutrition Activities</h4>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Farm</th>
+                                                <th>Field</th>
+                                                <th>Activity</th>
+                                                <th>Responsable</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Rows will be added dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Reports Tab -->
+                            <div class="tab-pane fade" id="reports" role="tabpanel" 
+                                 aria-labelledby="reports-tab">
+                                <!-- Filters -->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Filter Reports</h5>
+                                        <div class="row">
+                                            <div class="col-md-2 mb-3">
+                                                <label for="farmFilter" class="form-label">Farm</label>
+                                                <select class="form-select" id="farmFilter">
+                                                    <option value="">All Farms</option>
+                                                    <option value="Farm 1">Farm 1</option>
+                                                    <option value="Farm 2">Farm 2</option>
+                                                    <option value="Farm 3">Farm 3</option>
+                                                    <option value="Farm 4">Farm 4</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="paddockFilter" class="form-label">Paddock</label>
+                                                <select class="form-select" id="paddockFilter">
+                                                    <option value="">All Paddocks</option>
+                                                    <option value="Field A">Field A</option>
+                                                    <option value="Field B">Field B</option>
+                                                    <option value="Field C">Field C</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="nutrientFilter" class="form-label">Nutrient</label>
+                                                <select class="form-select" id="nutrientFilter">
+                                                    <option value="">All</option>
+                                                    <option value="Nitrogen">Nitrogen</option>
+                                                    <option value="Phosphorus">Phosphorus</option>
+                                                    <option value="Potassium">Potassium</option>
+                                                    <option value="Calcium">Calcium</option>
+                                                    <option value="Magnesium">Magnesium</option>
+                                                    <option value="Sulphur">Sulphur</option>
+                                                    <option value="Sodium">Sodium</option>
+                                                    <option value="Iron">Iron</option>
+                                                    <option value="Copper">Copper</option>
+                                                    <option value="Manganese">Manganese</option>
+                                                    <option value="Zinc">Zinc</option>
+                                                    <option value="Boron">Boron</option>
+                                                    <option value="Molybdenum">Molybdenum</option>
+                                                    <option value="Cobalt">Cobalt</option>
+                                                    <option value="Silicon">Silicon</option>
+                                                    <option value="Selenium">Selenium</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="fertTypeFilter" class="form-label">Fertilization Type</label>
+                                                <select class="form-select" id="fertTypeFilter">
+                                                    <option value="">All</option>
+                                                    <option value="Fertigation">Fertigation</option>
+                                                    <option value="Foliar Spray">Foliar Spray</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="responsableFilter" class="form-label">Responsable</label>
+                                                <select class="form-select" id="responsableFilter">
+                                                    <option value="">All</option>
+                                                    <option value="John Doe">John Doe</option>
+                                                    <option value="Jane Smith">Jane Smith</option>
+                                                    <option value="Carlos Ruiz">Carlos Ruiz</option>
+                                                    <option value="Amina Patel">Amina Patel</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3">
+                                                <label for="dateRangeFilter" class="form-label">Date Range</label>
+                                                <select class="form-select" id="dateRangeFilter">
+                                                    <option value="7">Last 7 days</option>
+                                                    <option value="30">Last 30 days</option>
+                                                    <option value="90">Last 90 days</option>
+                                                    <option value="180">Last 6 months</option>
+                                                    <option value="365">Last year</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-3 d-flex align-items-end">
+                                                <button class="btn btn-success me-2" id="applyFilters">Apply Filters</button>
+                                                <button class="btn btn-outline-secondary" id="resetFilters">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Monthly Nutrient Application Chart -->
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Monthly Nutrient Applications (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="nutrientUsageChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Distribution Charts -->
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Applications by Paddock (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="paddockDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Applications by Farm (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="farmDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Applications by Responsable (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="responsableDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Settings Tab -->
+                            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <div class="mb-3">
+                                    <h4>Settings</h4>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>How Crop Nutrition Tracking Works:</strong><br>
+                                    All nutrient tracking in this section is based on the ingredients and nutrient content you assign to products in the inventory section, under the <b>Product Nutrient Tracker</b>. To ensure accurate reporting, please keep your product nutrient information up to date in the inventory.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="../js/main.js"></script>
+    <script src="js/nutrition.js"></script>
+</body>
+</html> 
