@@ -1,0 +1,145 @@
+/* Custom styles for FMS Reports */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.list-group-item.active {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Tab styles */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+    color: #8bb33a;
+}
+
+.nav-tabs .nav-link.active {
+    border: none;
+    color: #8bb33a;
+    border-bottom: 2px solid #8bb33a;
+}
+
+/* Table styles */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-top: none;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(139, 179, 58, 0.05);
+}
+
+/* Chart container styles */
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Link styles */
+a {
+    color: #198754;
+}
+
+a:hover {
+    color: #146c43;
+}
+
+/* Button Styles */
+.btn-success {
+    background-color: #8bb33a;
+    border-color: #8bb33a;
+}
+
+.btn-success:hover {
+    background-color: #7a9b32;
+    border-color: #7a9b32;
+}
+
+.btn-outline-success {
+    color: #8bb33a;
+    border-color: #8bb33a;
+}
+
+.btn-outline-success:hover {
+    background-color: #8bb33a;
+    border-color: #8bb33a;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+}
+
+.bg-success {
+    background-color: #8bb33a !important;
+}
+
+/* Filter Section */
+.card-body .form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-select:focus {
+    border-color: #8bb33a;
+    box-shadow: 0 0 0 0.2rem rgba(139, 179, 58, 0.25);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 8px 15px;
+    }
+} 
