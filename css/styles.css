@@ -68,8 +68,8 @@ body {
 
 /* Chart container styles */
 .chart-container {
-    position: relative;
-    height: 300px;
+    height: 250px;
+    margin-bottom: 1.5rem;
     width: 100%;
 }
 
