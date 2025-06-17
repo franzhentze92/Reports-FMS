@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irrigation Reports - FMS</title>
+    <title>Produce Reports - FMS</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <!-- Custom CSS -->
     <link href="../css/styles.css" rel="stylesheet">
+    <style>
+        .chart-container {
+            max-width: 100%;
+            height: 350px;
+            margin: 0 auto;
+        }
+        .chart-container canvas {
+            max-width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
@@ -19,12 +31,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h2 class="card-title mb-0">Irrigation Analytics</h2>
+                            <h2 class="card-title mb-0">Produce Analytics</h2>
                             <a href="../index.html" class="btn btn-outline-success">Back to Reports</a>
                         </div>
-                        
                         <!-- Tabs -->
-                        <ul class="nav nav-tabs" id="irrigationTabs" role="tablist">
+                        <ul class="nav nav-tabs" id="plantingTabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="activities-tab" data-bs-toggle="tab" 
                                         data-bs-target="#activities" type="button" role="tab" 
@@ -41,48 +52,31 @@
                                         aria-controls="settings" aria-selected="false">Settings</button>
                             </li>
                         </ul>
-
                         <!-- Tab Content -->
-                        <div class="tab-content mt-4" id="irrigationTabsContent">
+                        <div class="tab-content mt-4" id="plantingTabsContent">
                             <!-- Activities Tab -->
                             <div class="tab-pane fade show active" id="activities" role="tabpanel" 
                                  aria-labelledby="activities-tab">
                                 <div class="mb-3">
-                                    <h4>Irrigation Activities</h4>
+                                    <h4>Produce Activities</h4>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <label for="activitiesFarmFilter" class="form-label">Farm</label>
-                                        <select class="form-select" id="activitiesFarmFilter">
-                                            <option value="">All Farms</option>
-                                            <option value="Farm 1">Farm 1</option>
-                                            <option value="Farm 2">Farm 2</option>
-                                            <option value="Farm 3">Farm 3</option>
-                                            <option value="Farm 4">Farm 4</option>
-                                        </select>
+                                        <select class="form-select" id="activitiesFarmFilter"></select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="activitiesPaddockFilter" class="form-label">Paddock</label>
-                                        <select class="form-select" id="activitiesPaddockFilter">
-                                            <option value="">All Paddocks</option>
-                                            <option value="Field A">Field A</option>
-                                            <option value="Field B">Field B</option>
-                                            <option value="Field C">Field C</option>
-                                        </select>
+                                        <select class="form-select" id="activitiesPaddockFilter"></select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="activitiesResponsableFilter" class="form-label">Responsable</label>
-                                        <select class="form-select" id="activitiesResponsableFilter">
-                                            <option value="">All</option>
-                                            <option value="John Doe">John Doe</option>
-                                            <option value="Jane Smith">Jane Smith</option>
-                                            <option value="Carlos Ruiz">Carlos Ruiz</option>
-                                            <option value="Amina Patel">Amina Patel</option>
-                                        </select>
+                                        <select class="form-select" id="activitiesResponsableFilter"></select>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="activitiesDateRangeFilter" class="form-label">Date Range</label>
                                         <select class="form-select" id="activitiesDateRangeFilter">
+                                            <option value="">All</option>
                                             <option value="7">Last 7 days</option>
                                             <option value="30">Last 30 days</option>
                                             <option value="90">Last 90 days</option>
@@ -90,39 +84,41 @@
                                             <option value="365">Last year</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <button class="btn btn-success me-2" id="applyActivitiesFilters">Apply Filters</button>
-                                        <button class="btn btn-outline-secondary" id="resetActivitiesFilters">Reset</button>
+                                    <div class="col-md-3 mt-2">
+                                        <label for="activitiesCropFilter" class="form-label">Produce Name</label>
+                                        <select class="form-select" id="activitiesCropFilter"></select>
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-end mt-2">
+                                        <div class="w-50 me-2">
+                                            <label for="activitiesVarietyFilter" class="form-label">Batch ID</label>
+                                            <select class="form-select" id="activitiesVarietyFilter"></select>
+                                        </div>
+                                        <div class="d-flex align-items-end mb-1">
+                                            <button class="btn btn-success me-2" id="applyActivitiesFilters" style="height: 38px;">Apply Filters</button>
+                                            <button class="btn btn-outline-secondary" id="resetActivitiesFilters" style="height: 38px;">Reset</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="plantingActivitiesTable">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Farm</th>
                                                 <th>Paddock</th>
-                                                <th>Duration (hours)</th>
-                                                <th>Water Volume (m³)</th>
+                                                <th>Produce Name</th>
+                                                <th>Batch ID</th>
+                                                <th>Quantity</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>2024-03-15</td>
-                                                <td>Farm 1</td>
-                                                <td>Field A</td>
-                                                <td>4.5</td>
-                                                <td>1200</td>
-                                                <td><span class="badge bg-success">Completed</span></td>
-                                            </tr>
-                                            <!-- More rows will be added dynamically -->
+                                            <!-- Rows will be added dynamically -->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                             <!-- Reports Tab -->
                             <div class="tab-pane fade" id="reports" role="tabpanel" 
                                  aria-labelledby="reports-tab">
@@ -133,36 +129,20 @@
                                         <div class="row">
                                             <div class="col-md-3 mb-3">
                                                 <label for="farmFilter" class="form-label">Farm</label>
-                                                <select class="form-select" id="farmFilter">
-                                                    <option value="">All Farms</option>
-                                                    <option value="Farm 1">Farm 1</option>
-                                                    <option value="Farm 2">Farm 2</option>
-                                                    <option value="Farm 3">Farm 3</option>
-                                                    <option value="Farm 4">Farm 4</option>
-                                                </select>
+                                                <select class="form-select" id="farmFilter"></select>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label for="paddockFilter" class="form-label">Paddock</label>
-                                                <select class="form-select" id="paddockFilter">
-                                                    <option value="">All Paddocks</option>
-                                                    <option value="Field A">Field A</option>
-                                                    <option value="Field B">Field B</option>
-                                                    <option value="Field C">Field C</option>
-                                                </select>
+                                                <select class="form-select" id="paddockFilter"></select>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label for="responsableFilter" class="form-label">Responsable</label>
-                                                <select class="form-select" id="responsableFilter">
-                                                    <option value="">All</option>
-                                                    <option value="John Doe">John Doe</option>
-                                                    <option value="Jane Smith">Jane Smith</option>
-                                                    <option value="Carlos Ruiz">Carlos Ruiz</option>
-                                                    <option value="Amina Patel">Amina Patel</option>
-                                                </select>
+                                                <select class="form-select" id="responsableFilter"></select>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <label for="dateRangeFilter" class="form-label">Date Range</label>
                                                 <select class="form-select" id="dateRangeFilter">
+                                                    <option value="">All</option>
                                                     <option value="7">Last 7 days</option>
                                                     <option value="30">Last 30 days</option>
                                                     <option value="90">Last 90 days</option>
@@ -170,87 +150,88 @@
                                                     <option value="365">Last year</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <button class="btn btn-success" id="applyFilters">Apply Filters</button>
-                                                <button class="btn btn-outline-secondary" id="resetFilters">Reset</button>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="cropFilter" class="form-label">Produce Name</label>
+                                                <select class="form-select" id="cropFilter"></select>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Monthly Water Usage Chart -->
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Monthly Water Usage</h5>
-                                                <div class="chart-container">
-                                                    <canvas id="waterUsageChart"></canvas>
+                                            <div class="col-md-6 mb-3 d-flex align-items-end">
+                                                <div class="w-50 me-2">
+                                                    <label for="varietyFilter" class="form-label">Batch ID</label>
+                                                    <select class="form-select" id="varietyFilter"></select>
+                                                </div>
+                                                <div class="d-flex align-items-end mb-1">
+                                                    <button class="btn btn-success me-2" id="applyFilters" style="height: 38px;">Apply Filters</button>
+                                                    <button class="btn btn-outline-secondary" id="resetFilters" style="height: 38px;">Reset</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!-- Distribution Charts -->
-                                <div class="row">
-                                    <div class="col-md-4 mb-4">
+                                <!-- Monthly Planted Chart -->
+                                <div class="row mb-4">
+                                    <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Water Usage by Paddock</h5>
+                                                <h5 class="card-title">Produce Amount (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="monthlyPlantedChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Distribution Charts -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Produce by Paddock (kg)</h5>
                                                 <div class="chart-container">
                                                     <canvas id="paddockDistributionChart"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-4">
+                                    <div class="col-md-6 mb-4">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Water Usage by Farm</h5>
+                                                <h5 class="card-title">Produce by Farm (kg)</h5>
                                                 <div class="chart-container">
                                                     <canvas id="farmDistributionChart"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-4">
+                                    <div class="col-md-6 mb-4">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title">Water Usage by Responsable</h5>
+                                                <h5 class="card-title">Produce by Responsable (kg)</h5>
                                                 <div class="chart-container">
                                                     <canvas id="responsableDistributionChart"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Produce by Product (kg)</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="productDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                             <!-- Settings Tab -->
                             <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                 <div class="mb-3">
                                     <h4>Settings</h4>
                                 </div>
                                 <div class="alert alert-info" role="alert">
-                                    <strong>How Water Usage Calculation Works:</strong><br>
-                                    The water usage for each irrigation activity is calculated using the value you set below (cubic meters per hour). All irrigation activity records and calculations in this section are based on data from the Activity module. Please ensure your activity records are up to date for accurate reporting.
-                                </div>
-                                <form id="settingsForm" class="mb-3" autocomplete="off">
-                                    <div class="mb-3 row">
-                                        <label for="cubicMetersPerHour" class="col-sm-4 col-form-label">Cubic meters per hour (m³/h)</label>
-                                        <div class="col-sm-4">
-                                            <input type="number" min="0" step="0.01" class="form-control" id="cubicMetersPerHour" name="cubicMetersPerHour" placeholder="Enter value" required>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <button type="submit" class="btn btn-success">Save</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div id="settingsSavedMsg" class="alert alert-success d-none" role="alert">
-                                    Settings saved!
+                                    <strong>How Produce Tracking Works:</strong><br>
+                                    All information in this section is taken from the produce module. Please ensure your produce records are up to date for accurate reporting.
                                 </div>
                             </div>
                         </div>
@@ -259,15 +240,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap Bundle with Popper -->
+    <script src="js/produce.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-    <!-- Custom JavaScript -->
-    <script src="../js/main.js"></script>
-    <script src="js/irrigation.js"></script>
 </body>
 </html> 

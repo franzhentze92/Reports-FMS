@@ -99,6 +99,7 @@ function filterActivities() {
         variety: document.getElementById('activitiesVarietyFilter').value
     };
     let filtered = harvestActivities.filter(activity => {
+        if (activity.status !== 'Completed') return false;
         if (filters.farm && activity.farm !== filters.farm) return false;
         if (filters.paddock && activity.paddock !== filters.paddock) return false;
         if (filters.responsable && activity.responsable !== filters.responsable) return false;
@@ -134,6 +135,8 @@ function filterActivities() {
 }
 
 function renderHarvestActivitiesTable(activities = harvestActivities) {
+    // Filter to only show completed activities
+    activities = activities.filter(a => a.status === 'Completed');
     const tbody = document.querySelector('#plantingActivitiesTable tbody');
     tbody.innerHTML = '';
 
@@ -194,6 +197,7 @@ function updateCharts() {
         variety: document.getElementById('varietyFilter').value
     };
     let filtered = harvestActivities.filter(activity => {
+        if (activity.status !== 'Completed') return false;
         if (filters.farm && activity.farm !== filters.farm) return false;
         if (filters.paddock && activity.paddock !== filters.paddock) return false;
         if (filters.responsable && activity.responsable !== filters.responsable) return false;
