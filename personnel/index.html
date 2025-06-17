@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personnel Reports - FMS</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+    <!-- Custom CSS -->
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Main Content Area -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="card-title mb-0">Personnel Analytics</h2>
+                            <a href="../index.html" class="btn btn-outline-success">Back to Reports</a>
+                        </div>
+                        
+                        <!-- Tabs -->
+                        <ul class="nav nav-tabs" id="personnelTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="activities-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#activities" type="button" role="tab" 
+                                        aria-controls="activities" aria-selected="true">Activities</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="reports-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#reports" type="button" role="tab" 
+                                        aria-controls="reports" aria-selected="false">Reports</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" 
+                                        data-bs-target="#settings" type="button" role="tab" 
+                                        aria-controls="settings" aria-selected="false">Settings</button>
+                            </li>
+                        </ul>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content mt-4" id="personnelTabsContent">
+                            <!-- Activities Tab -->
+                            <div class="tab-pane fade show active" id="activities" role="tabpanel" 
+                                 aria-labelledby="activities-tab">
+                                <div class="mb-3">
+                                    <h4>Personnel Activities</h4>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="activitiesFarmFilter" class="form-label">Farm</label>
+                                        <select class="form-select" id="activitiesFarmFilter">
+                                            <option value="">All Farms</option>
+                                            <option value="Farm 1">Farm 1</option>
+                                            <option value="Farm 2">Farm 2</option>
+                                            <option value="Farm 3">Farm 3</option>
+                                            <option value="Farm 4">Farm 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesPaddockFilter" class="form-label">Paddock</label>
+                                        <select class="form-select" id="activitiesPaddockFilter">
+                                            <option value="">All Paddocks</option>
+                                            <option value="Field A">Field A</option>
+                                            <option value="Field B">Field B</option>
+                                            <option value="Field C">Field C</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesResponsableFilter" class="form-label">Employee</label>
+                                        <select class="form-select" id="activitiesResponsableFilter">
+                                            <option value="">All Employees</option>
+                                            <option value="John Doe">John Doe</option>
+                                            <option value="Jane Smith">Jane Smith</option>
+                                            <option value="Carlos Ruiz">Carlos Ruiz</option>
+                                            <option value="Amina Patel">Amina Patel</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesTaskFilter" class="form-label">Task</label>
+                                        <select class="form-select" id="activitiesTaskFilter">
+                                            <option value="">All Tasks</option>
+                                            <option value="Planting">Planting</option>
+                                            <option value="Irrigation">Irrigation</option>
+                                            <option value="Harvesting">Harvesting</option>
+                                            <option value="Maintenance">Maintenance</option>
+                                            <option value="Fertilizing">Fertilizing</option>
+                                            <option value="Pest Control">Pest Control</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="activitiesDateRangeFilter" class="form-label">Date Range</label>
+                                        <select class="form-select" id="activitiesDateRangeFilter">
+                                            <option value="7">Last 7 days</option>
+                                            <option value="30">Last 30 days</option>
+                                            <option value="90">Last 90 days</option>
+                                            <option value="180">Last 6 months</option>
+                                            <option value="365">Last year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <button class="btn btn-success me-2" id="applyActivitiesFilters">Apply Filters</button>
+                                        <button class="btn btn-outline-secondary" id="resetActivitiesFilters">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Farm</th>
+                                                <th>Paddock</th>
+                                                <th>Employee</th>
+                                                <th>Hours Worked</th>
+                                                <th>Task</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>2024-03-15</td>
+                                                <td>Farm 1</td>
+                                                <td>Field A</td>
+                                                <td>John Doe</td>
+                                                <td>8.0</td>
+                                                <td>Planting</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                                <td><button class="btn btn-outline-success btn-sm">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-04-10</td>
+                                                <td>Farm 2</td>
+                                                <td>Field B</td>
+                                                <td>Jane Smith</td>
+                                                <td>6.5</td>
+                                                <td>Irrigation</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                                <td><button class="btn btn-outline-success btn-sm">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-05-05</td>
+                                                <td>Farm 3</td>
+                                                <td>Field C</td>
+                                                <td>Carlos Ruiz</td>
+                                                <td>7.5</td>
+                                                <td>Harvesting</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                                <td><button class="btn btn-outline-success btn-sm">View</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-06-20</td>
+                                                <td>Farm 4</td>
+                                                <td>Field A</td>
+                                                <td>Amina Patel</td>
+                                                <td>8.0</td>
+                                                <td>Maintenance</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                                <td><button class="btn btn-outline-success btn-sm">View</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Reports Tab -->
+                            <div class="tab-pane fade" id="reports" role="tabpanel" 
+                                 aria-labelledby="reports-tab">
+                                <!-- Filters -->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Filter Reports</h5>
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <label for="farmFilter" class="form-label">Farm</label>
+                                                <select class="form-select" id="farmFilter">
+                                                    <option value="">All Farms</option>
+                                                    <option value="Farm 1">Farm 1</option>
+                                                    <option value="Farm 2">Farm 2</option>
+                                                    <option value="Farm 3">Farm 3</option>
+                                                    <option value="Farm 4">Farm 4</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="paddockFilter" class="form-label">Paddock</label>
+                                                <select class="form-select" id="paddockFilter">
+                                                    <option value="">All Paddocks</option>
+                                                    <option value="Field A">Field A</option>
+                                                    <option value="Field B">Field B</option>
+                                                    <option value="Field C">Field C</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="responsableFilter" class="form-label">Employee</label>
+                                                <select class="form-select" id="responsableFilter">
+                                                    <option value="">All Employees</option>
+                                                    <option value="John Doe">John Doe</option>
+                                                    <option value="Jane Smith">Jane Smith</option>
+                                                    <option value="Carlos Ruiz">Carlos Ruiz</option>
+                                                    <option value="Amina Patel">Amina Patel</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="taskFilter" class="form-label">Task</label>
+                                                <select class="form-select" id="taskFilter">
+                                                    <option value="">All Tasks</option>
+                                                    <option value="Planting">Planting</option>
+                                                    <option value="Irrigation">Irrigation</option>
+                                                    <option value="Harvesting">Harvesting</option>
+                                                    <option value="Maintenance">Maintenance</option>
+                                                    <option value="Fertilizing">Fertilizing</option>
+                                                    <option value="Pest Control">Pest Control</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <label for="dateRangeFilter" class="form-label">Date Range</label>
+                                                <select class="form-select" id="dateRangeFilter">
+                                                    <option value="7">Last 7 days</option>
+                                                    <option value="30">Last 30 days</option>
+                                                    <option value="90">Last 90 days</option>
+                                                    <option value="180">Last 6 months</option>
+                                                    <option value="365">Last year</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn btn-success" id="applyFilters">Apply Filters</button>
+                                                <button class="btn btn-outline-secondary" id="resetFilters">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Monthly Work Hours Chart -->
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Monthly Work Hours</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="workHoursChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Distribution Charts -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Hours by Paddock</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="paddockDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Hours by Farm</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="farmDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Hours by Employee</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="responsableDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Hours by Activity</h5>
+                                                <div class="chart-container">
+                                                    <canvas id="activityDistributionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Settings Tab -->
+                            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <div class="mb-3">
+                                    <h4>Settings</h4>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>How Personnel Analytics Work:</strong><br>
+                                    All personnel activity records and calculations in this section are based on data from the Team module. Please ensure your team records are up to date for accurate reporting.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="../js/main.js"></script>
+    <script src="js/personnel.js"></script>
+</body>
+</html> 
